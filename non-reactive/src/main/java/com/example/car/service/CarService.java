@@ -4,6 +4,7 @@ import com.example.car.domain.Car;
 import com.example.car.domain.CarRepository;
 import com.example.car.web.CarNotFoundException;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +16,7 @@ public class CarService {
 		this.carRepository = carRepository;
 	}
 
+	@Cacheable("cars")
 	public Car getCarDetails(String name) {
 		Car car = carRepository.findByName(name);
 		if(car == null) {
