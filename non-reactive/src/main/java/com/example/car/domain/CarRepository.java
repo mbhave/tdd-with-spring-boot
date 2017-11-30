@@ -1,8 +1,9 @@
 package com.example.car.domain;
 
-public class CarRepository {
+import org.springframework.data.repository.CrudRepository;
 
-	public Car findByName(String name) {
-		return null;
-	}
+public interface CarRepository extends CrudRepository<Car,String> {
+
+	Car findByName(String name);
+
 }
