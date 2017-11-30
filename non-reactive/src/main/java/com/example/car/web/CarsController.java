@@ -18,7 +18,11 @@ public class CarsController {
 
 	@GetMapping("/cars/{name}")
 	public Car getCar(@PathVariable String name) {
-		return this.carRepository.findByName(name);
+		Car car = this.carRepository.findByName(name);
+		if (car == null) {
+			throw new CarNotFoundException();
+		}
+		return car;
 	}
 
 }

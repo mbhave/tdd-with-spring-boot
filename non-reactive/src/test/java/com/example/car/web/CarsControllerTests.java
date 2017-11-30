@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -33,5 +34,12 @@ public class CarsControllerTests {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("name").value("prius"))
 				.andExpect(jsonPath("type").value("hybrid"));
+	}
+
+	@Test
+	public void getCar_NotFound_Returns404() throws Exception {
+		when(this.carRepository.findByName(any())).thenReturn(null);
+		this.mockMvc.perform(get("/cars/{name}", "prius"))
+				.andExpect(status().isNotFound());
 	}
 }
